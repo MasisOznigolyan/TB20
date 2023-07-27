@@ -48,7 +48,7 @@ public class EmailController {
 			description="Get the Email info by spesifying its id. Response will be EmailResponse object.")
 	@GetMapping("/emails/{id}")
 	public ResponseEntity<EmailResponse> getEmailById(@PathVariable("id") String id){
-		EmailResponse eMail=emailService.findById(id);
+		EmailResponse eMail=emailService.findByEmailId(id);
 		return ResponseEntity.status(HttpStatus.OK).body(eMail);
 	}
 }

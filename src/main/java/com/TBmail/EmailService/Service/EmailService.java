@@ -38,7 +38,7 @@ public class EmailService {
     
 	
 	public EmailResponse findByEmailId(String id) {
-		Email eMail=emailRepository.findByEMailId(id);
+		Email eMail=emailRepository.findByeMailId(id);
 		return modelMapper.map(eMail, EmailResponse.class);
 	}
 }

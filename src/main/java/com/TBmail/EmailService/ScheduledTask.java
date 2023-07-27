@@ -24,6 +24,7 @@ import com.TBmail.EmailService.Response.NewsResponse;
 import com.TBmail.EmailService.Response.UserCategoryResponse;
 import com.TBmail.EmailService.Response.UserEmailResponse;
 import com.TBmail.EmailService.Response.UserResponse;
+import com.TBmail.EmailService.Service.EmailSenderService;
 import com.TBmail.EmailService.Service.EmailService;
 import com.TBmail.EmailService.Service.LastSentService;
 import com.TBmail.EmailService.Service.NewsService;

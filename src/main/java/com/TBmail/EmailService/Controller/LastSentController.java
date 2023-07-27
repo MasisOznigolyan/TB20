@@ -24,9 +24,9 @@ public class LastSentController {
 	LastSentService lastSentService;
 	@Operation(summary="get LastSent by UserEmailId",
 			description="Get the LastSent info by spesifying UserEmailId. Response will be LastSentResponse object.")
-	@GetMapping("/lastSent/{user}")
-	public ResponseEntity<LastSentResponse> findByUserEmail(@PathVariable("user") String userEmail){
-		LastSentResponse res=lastSentService.findByUserEmailIdR(userEmail);
+	@GetMapping("/lastSent/{UserEmailId}")
+	public ResponseEntity<LastSentResponse> findByUserEmail(@PathVariable("UserEmailId") String userEmailId){
+		LastSentResponse res=lastSentService.findByUserEmailIdR(userEmailId);
 		return ResponseEntity.status(HttpStatus.OK).body(res);
 	}
 	

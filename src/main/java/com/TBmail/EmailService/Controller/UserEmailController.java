@@ -23,10 +23,10 @@ public class UserEmailController {
 	UserEmailService userEmailService;
 	
 	
-	@Operation(summary="get userEmail by id",
-			description="Get the userEmail info by spesifying its id. Response will be userEmailResponse object.")
-	@GetMapping("/userEmail/{id}")
-	public ResponseEntity<UserEmailResponse> findByUserId(@PathVariable("id") String id ){
+	@Operation(summary="get userEmail by primary user id",
+			description="Get the userEmail info by spesifying primary user id. Response will be userEmailResponse object.")
+	@GetMapping("/userEmail/{UserId}")
+	public ResponseEntity<UserEmailResponse> findByUserId(@PathVariable("UserId") String id ){
 		UserEmailResponse ue=userEmailService.findByUserIdR(id);
 		return ResponseEntity.status(HttpStatus.OK).body(ue);
 	}

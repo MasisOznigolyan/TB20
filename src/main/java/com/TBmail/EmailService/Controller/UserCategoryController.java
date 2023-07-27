@@ -23,10 +23,10 @@ public class UserCategoryController {
 	UserCategoryService userCategoryService;
 	
 	
-	@Operation(summary="get userCategory by id",
-			description="Get the userCategory info by spesifying its id. Response will be userCategoryResponse object.")
-	@GetMapping("/userCategory/{id}")
-	public ResponseEntity<UserCategoryResponse> findByUserId(@PathVariable("id") String id){
+	@Operation(summary="get userCategory by primary user id",
+			description="Get the userCategory info by spesifying primary user id. Response will be userCategoryResponse object.")
+	@GetMapping("/userCategory/{UserId}")
+	public ResponseEntity<UserCategoryResponse> findByUserId(@PathVariable("UserId") String id){
 		UserCategoryResponse ucr=userCategoryService.findByUserIdR(id);
 		return ResponseEntity.status(HttpStatus.OK).body(ucr);
 	}

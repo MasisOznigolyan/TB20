@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import com.TBmail.EmailService.Collections.Email;
 @Repository 
 public interface EmailRepository extends MongoRepository<Email, String> {
-    Email findByEMailId(String emailId);
+    Email findByeMailId(String eMailId);
     List<Email> findAll();
     @SuppressWarnings("unchecked")
 	Email save(Email email);
