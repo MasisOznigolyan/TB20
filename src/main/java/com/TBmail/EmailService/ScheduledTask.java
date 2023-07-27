@@ -71,7 +71,7 @@ public class ScheduledTask {
 
 		for (int i = 0; i < data.size(); i++) {
 
-			UserCategoryResponse uC = userCategoryService.findByUserIdR(data.get(i).getId());
+			UserCategoryResponse uC = userCategoryService.findByUserIdR(data.get(i).getUserId());
 			String tag = uC.getNewsCategoryId().getCategoryUrl();
 			ArrayList<String> urls = new ArrayList<String>();
 			for (int j = 0; j < 20; j++) {

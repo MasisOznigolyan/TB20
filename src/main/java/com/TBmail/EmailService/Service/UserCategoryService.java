@@ -7,11 +7,15 @@ import org.springframework.stereotype.Service;
 import com.TBmail.EmailService.Collections.UserCategory;
 import com.TBmail.EmailService.Repositories.UserCategoryRepository;
 import com.TBmail.EmailService.Response.UserCategoryResponse;
+import com.TBmail.EmailService.Response.UserResponse;
 
 @Service
 public class UserCategoryService {
 	@Autowired
 	private UserCategoryRepository userCategoryRepository;
+	
+	@Autowired
+	private UserService userService;
 	
 	@Autowired
 	private ModelMapper modelMapper;
@@ -20,7 +24,8 @@ public class UserCategoryService {
 		return userCategoryRepository.findByUserId(userId);
 	}
 	public UserCategoryResponse findByUserIdR(String userId) {//
-		UserCategory uc= userCategoryRepository.findByUserId(userId);
+		UserResponse user=userService.getUserByUserId(userId);
+		UserCategory uc= userCategoryRepository.findByUserId(user.getId());
 		return modelMapper.map(uc, UserCategoryResponse.class); 
 	}
 	
