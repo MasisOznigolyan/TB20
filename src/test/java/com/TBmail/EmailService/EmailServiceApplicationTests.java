@@ -2,6 +2,7 @@ package com.TBmail.EmailService;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.TBmail.EmailService.Parser.LastNews;
@@ -9,50 +10,10 @@ import com.TBmail.EmailService.Parser.MailContent;
 
 @SpringBootTest
 class EmailServiceApplicationTests {
+	
+		@Autowired
+		private EmailSenderService senderService;
 
-		/*
-		 @Test
-	    @DisplayName(value = "This test should return the sum of two numbers")
-	    //@ParameterizedTest(name = "1st parameter = {0}, 2nd parameter = {1}")
-	    //@CsvSource(value = {"-10, -1"})
-	    public void test_add() {
-	        // given
-	        float firstNumber = 15;
-	        float secondNumber = 14;
-	        int expected =29;
-
-	        // when
-	        Calculator calculator = new Calculator();
-	        float actual = calculator.add(firstNumber, secondNumber);
-
-	        // then
-	        Assertions.assertEquals(expected, actual);
-	    }
-		
-		@Test
-	    @DisplayName(value = "This 2nd test should return the sum of two numbers ")
-		 public void test_add2() {
-		        // given
-		        float firstNumber = 105;
-		        float secondNumber = 140;
-		        int expected =245;
-
-		        // when
-		        Calculator calculator = new Calculator();
-		        float actual = calculator.add(firstNumber, secondNumber);
-
-		        // then
-		        Assertions.assertEquals(expected, actual);
-		    }
-
-	    class Calculator {
-	        float add(float a, float b) {
-	            return a + b;
-	        }
-	        
-	    }
-	    */
-			
 	    
 	    @Test
 	    public void lastNewsTimeTest() {
@@ -137,4 +98,8 @@ class EmailServiceApplicationTests {
 	    	Assertions.assertEquals(expected, got);
 	    	
 	    }
+	    /*@Test
+	    public void sendMail() {
+	    	senderService.sendEmail("oznigolyan3@gmail.com", "Test", "MailSender is working");
+	    }*/
 }

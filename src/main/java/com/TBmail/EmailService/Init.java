@@ -5,7 +5,6 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,28 +30,28 @@ import com.TBmail.EmailService.Service.UserService;
 @Service
 public class Init {
 	@Autowired
-	UserService userService;
+	private UserService userService;
 	
 	@Autowired
-	EmailService emailService;
+	private EmailService emailService;
 	
 	@Autowired
-	NewsCategoryService newsCategoryService;
+	private NewsCategoryService newsCategoryService;
 	
 	@Autowired
-	NewsService newsService;
+	private NewsService newsService;
 	
 	@Autowired
-	LastSentService lastSentService;
+	private LastSentService lastSentService;
 	
 	@Autowired
-	UserCategoryService userCategoryService;
+	private UserCategoryService userCategoryService;
 	
 	@Autowired
-	UserEmailService userEmailService;
+	private UserEmailService userEmailService;
 	
-	@Autowired 
-	ModelMapper modelMapper;
+	
+	
 	public void initDb() {     
 	
 		
