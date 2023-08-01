@@ -64,7 +64,7 @@ public class ScheduledTask {
 	//@Scheduled(cron = "0 * * * * *") // "0 10/2 * * *"
 	public void sendMail() {
 
-		init.initDb();
+		//init.initDb();
 		List<UserResponse> data = userService.getAllUsersR();
 		
 		System.out.println("+-+-+-+-+-+-+-+");

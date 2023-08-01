@@ -47,6 +47,9 @@ public class UserController {
 	public ResponseEntity<List<UserResponse>> getAllUsers(){
 		
 		List<UserResponse> userList=userService.getAllUsersR();
+		if(userList==null)
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		
 		return ResponseEntity.status(HttpStatus.OK).body(userList);
 	}
 	
