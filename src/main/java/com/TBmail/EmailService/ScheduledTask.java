@@ -64,7 +64,7 @@ public class ScheduledTask {
 	//@Scheduled(cron = "0 * * * * *") // "0 10/2 * * *"
 	public void sendMail() {
 
-		//init.initDb();
+		init.initDb();
 		List<UserResponse> data = userService.getAllUsersR();
 		
 		System.out.println("+-+-+-+-+-+-+-+");
@@ -79,7 +79,7 @@ public class ScheduledTask {
 				urls.add(t1);
 
 			}
-			UserEmailResponse userem = userEmailService.findByUserIdR(data.get(i).getId());
+			UserEmailResponse userem = userEmailService.findByUserIdR(data.get(i).getUserId());
 			LastSentResponse ls = lastSentService.findByUserEmailIdR(userem.getId());
 
 			NewsResponse n = ls.getNewsId();
@@ -107,7 +107,7 @@ public class ScheduledTask {
 					System.out.println("Following news will be sent: " + mailUrls.get(j));
 					String content = MailContent.getContent(mailUrls.get(j));
 
-					String emailId = userEmailService.findByUserIdR(data.get(i).getId()).getEmailId().getId();
+					String emailId = userEmailService.findByUserIdR(data.get(i).getUserId()).getEmailId().getId();
 
 					EmailResponse emailResponse = emailService.findById(emailId);
 
@@ -137,7 +137,7 @@ public class ScheduledTask {
 					
 
 					if (j == mailUrls.size() - 1) {
-						UserEmailResponse eRes = userEmailService.findByUserIdR(data.get(i).getId());
+						UserEmailResponse eRes = userEmailService.findByUserIdR(data.get(i).getUserId());
 
 						LastSentResponse url = lastSentService.findByUserEmailIdR(eRes.getId());
 

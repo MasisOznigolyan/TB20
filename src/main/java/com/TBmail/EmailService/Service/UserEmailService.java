@@ -7,12 +7,16 @@ import org.springframework.stereotype.Service;
 import com.TBmail.EmailService.Collections.UserEmail;
 import com.TBmail.EmailService.Repositories.UserEmailRepository;
 import com.TBmail.EmailService.Response.UserEmailResponse;
+import com.TBmail.EmailService.Response.UserResponse;
 
 @Service
 public class UserEmailService {
 
 	@Autowired
 	private UserEmailRepository userEmailRepository;
+	
+	@Autowired
+	private UserService userService;
 	
 	@Autowired
 	private ModelMapper modelMapper;
@@ -22,7 +26,8 @@ public class UserEmailService {
 	}
 	
 	public UserEmailResponse findByUserIdR(String userId) {
-		UserEmail userEmail= userEmailRepository.findByUserId(userId);
+		UserResponse user=userService.getUserByUserId(userId);
+		UserEmail userEmail= userEmailRepository.findByUserId(user.getId());
 		return modelMapper.map(userEmail, UserEmailResponse.class);
 	}
 	

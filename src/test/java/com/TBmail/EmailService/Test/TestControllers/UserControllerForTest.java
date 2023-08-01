@@ -1,4 +1,5 @@
-package com.TBmail.EmailService.Controller;
+package com.TBmail.EmailService.Test.TestControllers;
+
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name="User", description="Controller for user CRUD operations")
 @RestController
-public class UserController {
+public class UserControllerForTest {
 	
 	@Autowired
 	UserService userService;
@@ -82,3 +83,4 @@ public class UserController {
 	}
 
 }
+

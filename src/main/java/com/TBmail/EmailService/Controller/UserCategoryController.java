@@ -23,8 +23,8 @@ public class UserCategoryController {
 	UserCategoryService userCategoryService;
 	
 	
-	@Operation(summary="get userCategory by primary user id",
-			description="Get the userCategory info by spesifying primary user id. Response will be userCategoryResponse object.")
+	@Operation(summary="get userCategory by user id",
+			description="Get the userCategory info by spesifying user id. Response will be userCategoryResponse object.")
 	@GetMapping("/userCategory/{UserId}")
 	public ResponseEntity<UserCategoryResponse> findByUserId(@PathVariable("UserId") String id){
 		UserCategoryResponse ucr=userCategoryService.findByUserIdR(id);

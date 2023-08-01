@@ -20,11 +20,12 @@ public class MyController {
 
     @Operation(summary="check for new news", description="Checks trendbasket.net for possible new news for spesified category. Do not use it if crone is activated ")
     @GetMapping("/mail")
-    public ResponseEntity<String> performMicroserviceAction() {
+    public ResponseEntity<Void> performMicroserviceAction() {
         
     	myMicroservice.sendMail();
     	String message = "Scheduled task triggered manually.";
-    	return ResponseEntity.status(HttpStatus.OK).body(message);
+    	System.out.println(message);
+    	return ResponseEntity.status(HttpStatus.OK).build();
     	
     }
 }

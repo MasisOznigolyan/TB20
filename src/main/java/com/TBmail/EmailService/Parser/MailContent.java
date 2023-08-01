@@ -11,7 +11,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 public class MailContent {
-	
+	//mockmvc faker jokoko
 	public static String getHtml(String website) {
 		String page=new String();
         try {
