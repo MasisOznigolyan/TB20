@@ -1,16 +1,19 @@
 package com.TBmail.EmailService.Response;
 
-import com.TBmail.EmailService.Collections.Uid;
 import com.TBmail.EmailService.Collections.UserEmail;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
 @Getter
 @Setter
 @Schema(accessMode = Schema.AccessMode.READ_ONLY)
+@AllArgsConstructor
+@NoArgsConstructor
 public class LastSentResponse {
 	
     private String id;
@@ -23,9 +26,7 @@ public class LastSentResponse {
 	
 	private NewsResponse newsId;
 	
-	public LastSentResponse() {
-		this.LastSentId=Uid.generateUniqueId();
-	}
+	
 
 	@Override
 	public String toString() {

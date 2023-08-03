@@ -42,13 +42,40 @@ public class UsersTests {
     private MockMvc mockMvc;
 	
 	@MockBean
-    private UserController userControllerForTest;
-	
+    private UserController userController;
 	
 	@MockBean
 	private ModelMapper modelMapper;
 	
-	UserGenerator userGenerator= new UserGenerator();
+	private UserGenerator userGenerator= new UserGenerator();
+	
+	@Test
+	@DisplayName("getUserByIdTest")
+	public void getById() throws Exception {
+		User user=userGenerator.generateUser();
+		System.out.println(user);
+		UserResponse uR =new UserResponse(user.getId(),user.getUserId(),user.getName()); 
+		
+		//UserResponse uR=userGenerator.generateUserResponse();
+		System.out.println(uR);
+		String id=uR.getUserId();
+		
+		when(userController.getUserDetails(user.getUserId())).thenReturn(ResponseEntity.status(HttpStatus.OK).body(uR));
+		
+		MvcResult result = mockMvc.perform(get("/users/"+id).accept(CONTENT_TYPE))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name",is(uR.getName())))
+                .andExpect(jsonPath("$.id",is(uR.getId())))
+                .andExpect(jsonPath("$.userId",is(uR.getUserId())))
+                .andReturn();
+		
+		
+		//UserResponse retrive=new ObjectMapper().readValue(responseBody, new TypeReference<UserResponse>() {});
+        //assertNotNull(responseBody);
+        //assertEquals(uR.getId(),retrive.getId());
+        //assertEquals(uR.getName(),retrive.getName());
+
+	}
 	
 	@Test
     @DisplayName("getAllUsersTest")
@@ -59,7 +86,7 @@ public class UsersTests {
             uRList.add(userGenerator.generateUserResponse());
         }
         
-        when(userControllerForTest.getAllUsers()).thenReturn(ResponseEntity.status(HttpStatus.OK).body(uRList));
+        when(userController.getAllUsers()).thenReturn(ResponseEntity.status(HttpStatus.OK).body(uRList));
         MvcResult result = mockMvc.perform(get("/users").accept(CONTENT_TYPE))
                 .andExpect(status().isOk())
                 .andReturn();
@@ -82,36 +109,13 @@ public class UsersTests {
                 .andReturn();
 	}
 	
-	@Test
-	@DisplayName("getUserByIdTest")
-	public void getById() throws Exception {
-		
-		UserResponse uR=userGenerator.generateUserResponse();
-		String id=uR.getUserId();
-		
-		when(userControllerForTest.getUserDetails(id)).thenReturn(ResponseEntity.status(HttpStatus.OK).body(uR));
-		
-		MvcResult result = mockMvc.perform(get("/users/"+id).accept(CONTENT_TYPE))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name",is(uR.getName())))
-                .andExpect(jsonPath("$.id",is(uR.getId())))
-                .andExpect(jsonPath("$.userId",is(uR.getUserId())))
-                .andReturn();
-		
-		
-		//UserResponse retrive=new ObjectMapper().readValue(responseBody, new TypeReference<UserResponse>() {});
-        //assertNotNull(responseBody);
-        //assertEquals(uR.getName(),jsonPath("$.name"));
-        //assertEquals(uR.getId(),retrive.getId());
-        //assertEquals(uR.getName(),retrive.getName());
-
-	}
+	
 	
 	@Test
 	@DisplayName("tryGetUserByWrongIdTest")
 	public void getByWrongId() throws Exception {
 		
-		when(userControllerForTest.getUserDetails("wrogIDnumber")).thenReturn(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+		when(userController.getUserDetails("wrogIDnumber")).thenReturn(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
 			
 		mockMvc.perform(get("/users/wrogIDnumber").accept(CONTENT_TYPE))
 	                .andExpect(status().isNotFound())
@@ -124,7 +128,7 @@ public class UsersTests {
 		User user=userGenerator.generateUser();
 		
 		UserResponse uR= modelMapper.map(user, UserResponse.class);
-		when(userControllerForTest.createUser(user))
+		when(userController.createUser(user))
 			.thenReturn(ResponseEntity.status(HttpStatus.CREATED).body(uR));
 		
 		ObjectMapper objectMapper = new ObjectMapper();
@@ -135,11 +139,11 @@ public class UsersTests {
         	.andExpect(status().isCreated())
         	.andReturn();
 	}
-	
+
 	@Test
 	@DisplayName("DeleteAllUsersTest")
 	public void deleteAllUsers() throws Exception{
-		when(userControllerForTest.deleteAllUsers())
+		when(userController.deleteAllUsers())
 			.thenReturn(ResponseEntity.status(HttpStatus.GONE).build());
 		
 		mockMvc.perform(delete("/users/delete"))
@@ -151,7 +155,7 @@ public class UsersTests {
 	@DisplayName("deleteUserByIdTest")
 	public void deleteUserById() throws Exception{
 		User user=userGenerator.generateUser();
-		when(userControllerForTest.deleteUserById(user.getUserId())).thenReturn(ResponseEntity.status(HttpStatus.GONE).build());
+		when(userController.deleteUserById(user.getUserId())).thenReturn(ResponseEntity.status(HttpStatus.GONE).build());
 		mockMvc.perform(delete("/users/delete/"+user.getUserId()))
 		.andExpect(status().is(410))
 		.andReturn();
@@ -161,7 +165,7 @@ public class UsersTests {
 	@DisplayName("tryDeleteUserByWrongIdTest")
 	public void deleteUserByWrongId() throws Exception{
 		User user=userGenerator.generateUser();
-		when(userControllerForTest.deleteUserById(user.getUserId()+"111111")).thenReturn(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+		when(userController.deleteUserById(user.getUserId()+"111111")).thenReturn(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
 		mockMvc.perform(delete("/users/delete/"+user.getUserId()+"111111"))
 		.andExpect(status().is(404))
 		.andReturn();

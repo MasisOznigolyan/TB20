@@ -2,7 +2,9 @@ package com.TBmail.EmailService.Test.Tests;
 
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -19,10 +21,11 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import com.TBmail.EmailService.Collections.Email;
 import com.TBmail.EmailService.Controller.EmailController;
 import com.TBmail.EmailService.Response.EmailResponse;
 import com.TBmail.EmailService.Test.Generator.EmailGenerator;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
 @WebMvcTest(EmailController.class)
 public class EmailTests {
 
@@ -33,6 +36,9 @@ private final static String CONTENT_TYPE = "application/json";
 	
 	@MockBean
 	private EmailController emailController;
+	
+	
+
 	
 
 	@MockBean
@@ -66,5 +72,38 @@ private final static String CONTENT_TYPE = "application/json";
                 .andReturn();
 	}
 	
+	@Test
+	@DisplayName("deleteAllEmailsTest")
+	public void deleteAllEmails() throws Exception {
+		
+		when(emailController.deleteAllEmails())
+		.thenReturn(ResponseEntity.status(HttpStatus.GONE).build());
+	
+		mockMvc.perform(delete("/emails/delete"))
+			.andExpect(status().is(410))
+			.andReturn();
+	}
+	
+	@Test
+	@DisplayName("addNewEmail")
+	public void addNewEmail() throws Exception {
+		Email email= emailGenerator.generateEmail();
+		ObjectMapper objectMapper = new ObjectMapper();
+		String requestJson = objectMapper.writeValueAsString(email);
+		//System.out.println("reas: "+requestJson);
+		EmailResponse eRes=modelMapper.map(email, EmailResponse.class);
+		//new EmailResponse(email.getId(),email.getEMailId(),email.getEMail());
+		when(emailController.createEmail(email))
+			.thenReturn(ResponseEntity.status(HttpStatus.CREATED).body(eRes));
+		
+		
+		
+		mockMvc.perform(post("/emails/create")
+				.contentType(CONTENT_TYPE).content(requestJson))
+				.andExpect(status().isCreated())
+				.andReturn();
+		
+		
+	}
 	
 }

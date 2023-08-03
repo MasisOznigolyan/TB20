@@ -25,6 +25,7 @@ public class EmailService {
 	
 	
 	public EmailResponse createNewEmail(Email email) {
+		
 		Email eMail=emailRepository.save(email);
 		return modelMapper.map(eMail, EmailResponse.class);
 	}

@@ -6,6 +6,7 @@ import com.TBmail.EmailService.Collections.NewsCategory;
 import com.TBmail.EmailService.Collections.Uid;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +14,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Schema(accessMode = Schema.AccessMode.READ_ONLY)
+@AllArgsConstructor
 public class NewsResponse {
 	
     private String id;

@@ -23,7 +23,7 @@ public class NewsController {
 	
 	@Operation(summary="create/update News",
 			description="create/update by spesifying News object. Response will be NewsResponse object")
-	@PostMapping("News/add")
+	@PostMapping("/News/add")
 	public ResponseEntity<NewsResponse> addNews(News news){
 		NewsResponse nR=newsService.addNewsR(news);
 		return ResponseEntity.status(HttpStatus.CREATED).body(nR);
@@ -32,7 +32,7 @@ public class NewsController {
 	
 	@Operation(summary="delete all the News",
 			description="deletes all the News from database. Do not use if you don't have database backup")
-	@DeleteMapping("News/delete")
+	@DeleteMapping("/News/delete")
 	public ResponseEntity<Void> deleteAllNews(){
 		boolean deleted=newsService.deleteAllNewsR();
 		if (deleted) {

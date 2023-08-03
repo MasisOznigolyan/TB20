@@ -18,6 +18,8 @@ import com.TBmail.EmailService.Service.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(name="User", description="Controller for user CRUD operations")
@@ -57,6 +59,7 @@ public class UserController {
 	@Operation(summary="create/update user",
 			description="create/update by spesifying User type body. Response will be UserResponse object")
 	@PostMapping("/users/create")
+	@ApiResponses(value = {@ApiResponse(responseCode = "201", description  = "Created")})
 	public ResponseEntity<UserResponse>  createUser(@RequestBody User newUser){
 		UserResponse user=userService.createUser(newUser);
 		return ResponseEntity.status(HttpStatus.CREATED).body(user);

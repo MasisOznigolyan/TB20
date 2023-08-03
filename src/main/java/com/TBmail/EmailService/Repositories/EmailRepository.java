@@ -9,8 +9,8 @@ import com.TBmail.EmailService.Collections.Email;
 public interface EmailRepository extends MongoRepository<Email, String> {
     Email findByeMailId(String eMailId);
     List<Email> findAll();
-    @SuppressWarnings("unchecked")
-	Email save(Email email);
+    //@SuppressWarnings("unchecked")
+	//Email save(Email email);
     void deleteById(String id);
     void deleteAll();
     List<Email> findByEMail(String name);

@@ -6,7 +6,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -20,15 +19,17 @@ import lombok.Setter;
 @Document(collection = "users")
 public class User {
 	
+	
+
 	@NonNull
     @Id
-    @Setter(AccessLevel.NONE)
+    //@Setter(AccessLevel.NONE)
 	@Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private String id;
 		
 	@NonNull
     @Field("userId")
-	@Setter(AccessLevel.NONE)
+	//@Setter(AccessLevel.NONE)
 	@Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private String userId;
 	

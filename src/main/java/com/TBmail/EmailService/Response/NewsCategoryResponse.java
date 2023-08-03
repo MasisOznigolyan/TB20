@@ -3,12 +3,14 @@ package com.TBmail.EmailService.Response;
 import com.TBmail.EmailService.Collections.Uid;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 
 @Getter
 @Setter
+@AllArgsConstructor
 @Schema(accessMode = Schema.AccessMode.READ_ONLY)
 public class NewsCategoryResponse {
 	

@@ -116,11 +116,11 @@ public class Init {
         userCategoryService.createUserCategory(uk1);
         
         String url="https://trendbasket.net/turkish-airlines-euroleague-takimlarinin-2023-24-sezonu-kadrolari/";
-        String page= MailContent.getHtml(url);
         
         
         
-        String title=GetHead.getHead(page);
+        
+        String title=GetHead.getHeadJsoup(url);
         String content=MailContent.getContent(url);
         String postDate=LastNews.getLastNewsTime(url);
         
@@ -140,9 +140,9 @@ public class Init {
         lastSentService.addLastSent(lastSent);
         
         String url1 = "https://trendbasket.net/basketbol-sampiyonlar-liginde-temsilcilerimizin-gruplari-belli-oldu/";
-        String page1 =MailContent.getHtml(url1);
         
-        String title1 = GetHead.getHead(page1);
+        
+        String title1 = GetHead.getHeadJsoup(url1);
         String content1 = MailContent.getContent(url1);
         String postDate1 = LastNews.getLastNewsTime(url1);
         

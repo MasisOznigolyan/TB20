@@ -11,7 +11,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 public class MailContent {
-	//mockmvc faker jokoko
+	//mockmvc faker jacoco
 	public static String getHtml(String website) {
 		String page=new String();
         try {
@@ -19,11 +19,6 @@ public class MailContent {
                         
             URL URL = new URL(website); 
             BufferedReader br = new BufferedReader(new InputStreamReader(URL.openStream()));  
-            /*
-              URL.openStream() returns InputStream
-              constructor of InputStreamReader class -> InputStreamReader( InputStream x )  
-             constructor of BufferedReader class -> BufferedReader(InputStreamReader x  ) 
-             */
             while ((parseLine = br.readLine()) != null) { 
                
             	page=page+"/n"+parseLine;
@@ -60,20 +55,17 @@ public class MailContent {
 		Document document = Jsoup.parse(html);
 		        
 		        Elements headers=document.select("h4");
-		        // Step 2: Select <p> elements
+		        
 		        Elements paragraphs = document.select("p");
 		
-		        // Step 3: Loop through the selected elements and print their content
-		       
-		            //System.out.println(headers.get(0).text());
+		        
 		        content+=headers.get(0).text();
 		        content+="\n";
 		        content+="\n";
 		        content+="\n";
 		        for (int i=0; i<paragraphs.size()-6; i++) {
 		        	content+=paragraphs.get(i).text();
-		            //System.out.println(paragraphs.get(i).text());
-		            //System.out.println();
+		           
 		        	content+="\n";
 		        	content+="\n";
 		        }
@@ -81,11 +73,6 @@ public class MailContent {
         
         content+="Tags: ";
         content+=GetTags.get(html);
-        //System.out.print("Tags: ");
-        //System.out.println(GetTags.get(page));
-        //System.out.print(mailContent);
-        
-        
         
         return content;
 	}
