@@ -2,6 +2,8 @@ package com.TBmail.EmailService.Controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +31,7 @@ public class UserController {
 	@Autowired
 	UserService userService;
 	
-	
+	private static final Logger logInfo=LoggerFactory.getLogger(UserController.class);
 	
 	@Operation(summary="get user by id",
 			description="Get the user info by spesifying its id. Response will be userResponse object.")
@@ -39,6 +41,8 @@ public class UserController {
 		UserResponse user=userService.getUserByUserId(UserId);
 		if(user==null)
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		
+		logInfo.info("user with id "+ UserId +" is retrived" );
 		return ResponseEntity.status(HttpStatus.OK).body(user);
 	}
 	
@@ -51,7 +55,7 @@ public class UserController {
 		List<UserResponse> userList=userService.getAllUsersR();
 		if(userList==null)
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-		
+		logInfo.info("All users retrived");
 		return ResponseEntity.status(HttpStatus.OK).body(userList);
 	}
 	
@@ -62,6 +66,7 @@ public class UserController {
 	@ApiResponses(value = {@ApiResponse(responseCode = "201", description  = "Created")})
 	public ResponseEntity<UserResponse>  createUser(@RequestBody User newUser){
 		UserResponse user=userService.createUser(newUser);
+		logInfo.info("new user has been created");
 		return ResponseEntity.status(HttpStatus.CREATED).body(user);
 	}
 	
@@ -72,6 +77,7 @@ public class UserController {
 	public ResponseEntity<Void> deleteUserById(@PathVariable("id") String userId) {
 	    boolean deleted = userService.deleteUser(userId);
 	    if (deleted) {
+	    	logInfo.info("user with id "+userId+ " has been deleted");
 	        return ResponseEntity.status(HttpStatus.GONE).build(); 
 	    } else {
 	        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -84,6 +90,7 @@ public class UserController {
 	@DeleteMapping("/users/delete")
 	public ResponseEntity<Void> deleteAllUsers(){
 		userService.deleteAllUsers();
+		logInfo.info("All users are deleted");
 		return ResponseEntity.status(HttpStatus.GONE).build();
 	}
 

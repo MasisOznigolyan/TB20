@@ -1,5 +1,7 @@
 package com.TBmail.EmailService.Controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @Tag(name="LastSent", description="Controller for LastSent CRUD operations")
 public class LastSentController {
 
+	private static final Logger logInfo=LoggerFactory.getLogger(LastSentController.class);
+	
 	@Autowired
 	LastSentService lastSentService;
 	@Operation(summary="get LastSent by UserEmailId",
@@ -27,6 +31,7 @@ public class LastSentController {
 	@GetMapping("/lastSent/{UserEmailId}")
 	public ResponseEntity<LastSentResponse> findByUserEmail(@PathVariable("UserEmailId") String userEmailId){
 		LastSentResponse res=lastSentService.findByUserEmailIdR(userEmailId);
+		logInfo.info("user with id "+userEmailId+ " is retrived");
 		return ResponseEntity.status(HttpStatus.OK).body(res);
 	}
 	
@@ -36,6 +41,7 @@ public class LastSentController {
 	@PostMapping("/lastSent/add")
 	public ResponseEntity<LastSentResponse> addLastSent(LastSent lastSent){
 		LastSentResponse lsr=lastSentService.addLastSentR(lastSent);
+		logInfo.info("LastSent is updated / new LastSent is Added");
 		return ResponseEntity.status(HttpStatus.OK).body(lsr);
 	}
 	
@@ -46,6 +52,7 @@ public class LastSentController {
 	public ResponseEntity<Void> deleteAllLastSent(){
 		boolean deleted=lastSentService.deleteAllLastSentR();
 		if (deleted) {
+			logInfo.info("all lastSent deleted");
 	        return ResponseEntity.status(HttpStatus.GONE).build(); 
 	    } else {
 	        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

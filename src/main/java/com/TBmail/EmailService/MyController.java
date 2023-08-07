@@ -1,5 +1,7 @@
 package com.TBmail.EmailService;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,15 +19,21 @@ public class MyController {
 
     @Autowired
     private ScheduledTask myMicroservice;
+    
+    
+    private static final Logger logInfo=LoggerFactory.getLogger(MyController.class);
 
     @Operation(summary="check for new news", description="Checks trendbasket.net for possible new news for spesified category. Do not use it if crone is activated ")
     @GetMapping("/mail")
     public ResponseEntity<Void> performMicroserviceAction() {
-        
+    	
     	myMicroservice.sendMail();
-    	String message = "Scheduled task triggered manually.";
-    	System.out.println(message);
+    	//String message = "Scheduled task triggered manually.";
+    	//System.out.println(message);
+    	logInfo.info("Scheduled task triggered manually.");
     	return ResponseEntity.status(HttpStatus.OK).build();
     	
     }
+   
+    
 }

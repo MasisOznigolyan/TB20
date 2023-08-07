@@ -5,6 +5,8 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +35,7 @@ public class Admin {
 	@Autowired
 	private Init init;
 
+	private static final Logger logInfo=LoggerFactory.getLogger(Admin.class);
 	
 	@Autowired
 	private UserController userController;
@@ -122,7 +125,8 @@ public class Admin {
         lastSent.setNewsId(news);
         lastSent.setUserEmailId(userEmail);
 		lastSentController.addLastSent(lastSent);
-        
+		
+		logInfo.info("New User Added to DB");
 		return ResponseEntity.status(HttpStatus.CREATED).build();
 	}
 	
@@ -130,6 +134,7 @@ public class Admin {
 	@DeleteMapping("/resetDb")
 	public ResponseEntity<Void> resetDb(){
 		init.initDb();
+		logInfo.info("DB is cleared and reset");
 		return ResponseEntity.status(HttpStatus.GONE).build();
 		
 	}

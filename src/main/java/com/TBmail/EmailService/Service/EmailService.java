@@ -31,10 +31,19 @@ public class EmailService {
 	}
 	
     public EmailResponse findById(String id) {
-        Optional<Email> optionalEmail = emailRepository.findById(id);
-        Email email = optionalEmail.orElseThrow(NoSuchElementException::new);
-
-        return modelMapper.map(email, EmailResponse.class);
+    	EmailResponse res=null;
+    	
+    	try {
+    		Optional<Email> optionalEmail = emailRepository.findById(id);
+        	
+    		Email email = optionalEmail.orElseThrow(NoSuchElementException::new);
+    		res= modelMapper.map(email, EmailResponse.class);
+    	}
+        catch(IllegalArgumentException e){
+        	res=null;
+        }
+      return res;
+        
     }
     
 	

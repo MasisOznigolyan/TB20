@@ -86,8 +86,7 @@ public class ScheduledTask {
 
 			String lastSent = n.getUrl();
 
-			// System.out.println("last sent is "+lastSent);
-			// System.out.println("last news in website is "+urls.get(0));
+			
 			if (!(urls.get(0).equals(lastSent))) {
 				System.out.println("mail is being sent");
 				ArrayList<String> mailUrls = new ArrayList<String>();
@@ -186,12 +185,6 @@ public class ScheduledTask {
 
 	}
 
-	/*
-	 * public <T> T getDataFromAPI(String apiUrl, ParameterizedTypeReference<T>
-	 * responseType) { ResponseEntity<T> responseEntity =
-	 * restTemplate.exchange(apiUrl, HttpMethod.GET, null, responseType); return
-	 * responseEntity.getBody(); 
-	 * }
-	 */
+
 
 }

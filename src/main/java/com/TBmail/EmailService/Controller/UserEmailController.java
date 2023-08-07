@@ -1,5 +1,7 @@
 package com.TBmail.EmailService.Controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,12 +24,14 @@ public class UserEmailController {
 	@Autowired
 	UserEmailService userEmailService;
 	
+	private static final Logger logInfo=LoggerFactory.getLogger(NewsCategoryController.class);
 	
 	@Operation(summary="get userEmail by primary user id",
 			description="Get the userEmail info by spesifying primary user id. Response will be userEmailResponse object.")
 	@GetMapping("/userEmail/{UserId}")
 	public ResponseEntity<UserEmailResponse> findByUserId(@PathVariable("UserId") String id ){
 		UserEmailResponse ue=userEmailService.findByUserIdR(id);
+		logInfo.info("UserEmail is retrived with user id of "+id);
 		return ResponseEntity.status(HttpStatus.OK).body(ue);
 	}
 	
@@ -38,6 +42,7 @@ public class UserEmailController {
 	public ResponseEntity<Void> deleteUserEmails(){
 		boolean deleted =userEmailService.deleteAllUserEmailR();
 		if(deleted) {
+			logInfo.info("All UserEmails are deleted");
 			return ResponseEntity.status(HttpStatus.GONE).build();
 		}
 		else
@@ -50,6 +55,7 @@ public class UserEmailController {
 	@PostMapping("/userEmail/create")
 	public ResponseEntity<UserEmailResponse> addUserEmail(UserEmail userEmail){
 		UserEmailResponse ue=userEmailService.addUserEmailR(userEmail);
+		logInfo.info("new userEmail has been created");
 		return ResponseEntity.status(HttpStatus.CREATED).body(ue);
 	}
 	

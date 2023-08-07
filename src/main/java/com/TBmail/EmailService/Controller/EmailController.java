@@ -1,5 +1,7 @@
 package com.TBmail.EmailService.Controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,12 +26,15 @@ public class EmailController {
 	@Autowired
 	EmailService emailService;
 	
+	private static final Logger logInfo=LoggerFactory.getLogger(EmailController.class);
+	
 	@Operation(summary="create/update E-mail",
 			description="create/update by spesifying Email object. Response will be EmailResponse object")
 	@PostMapping("/emails/create")
 	public ResponseEntity<EmailResponse> createEmail(@RequestBody Email email){
 		//email.getEMail()
 		EmailResponse eMail=emailService.createNewEmail(email);
+		logInfo.info("new email is created in DB");
 		return ResponseEntity.status(HttpStatus.CREATED).body(eMail);
 		
 	}
@@ -40,6 +45,7 @@ public class EmailController {
 	@DeleteMapping("/emails/delete")
 	public ResponseEntity<Void> deleteAllEmails(){
 		emailService.deleteAllEmails();
+		logInfo.info("All Emails are deleted");
 		return ResponseEntity.status(HttpStatus.GONE).build();
 	}
 	
@@ -48,7 +54,14 @@ public class EmailController {
 			description="Get the Email info by spesifying its id. Response will be EmailResponse object.")
 	@GetMapping("/emails/{id}")
 	public ResponseEntity<EmailResponse> getEmailById(@PathVariable("id") String id){
+		
 		EmailResponse eMail=emailService.findByEmailId(id);
+		if(eMail==null) {
+			logInfo.info("tried to get email with id :"+id +"is not found");
+		}
+		else
+			logInfo.info("Email with id"+id +"is retrived");
+		
 		return ResponseEntity.status(HttpStatus.OK).body(eMail);
 	}
 }

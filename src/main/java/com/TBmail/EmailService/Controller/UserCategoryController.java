@@ -1,5 +1,7 @@
 package com.TBmail.EmailService.Controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,12 +24,14 @@ public class UserCategoryController {
 	@Autowired
 	UserCategoryService userCategoryService;
 	
+	private static final Logger logInfo=LoggerFactory.getLogger(UserCategoryController.class);
 	
 	@Operation(summary="get userCategory by user id",
 			description="Get the userCategory info by spesifying user id. Response will be userCategoryResponse object.")
 	@GetMapping("/userCategory/{UserId}")
 	public ResponseEntity<UserCategoryResponse> findByUserId(@PathVariable("UserId") String id){
 		UserCategoryResponse ucr=userCategoryService.findByUserIdR(id);
+		logInfo.info("user category with id "+id+ " is retrived");
 		return ResponseEntity.status(HttpStatus.OK).body(ucr);
 	}
 	
@@ -37,6 +41,7 @@ public class UserCategoryController {
 	@PostMapping("/userCategory/create")
 	public ResponseEntity<UserCategoryResponse>createUserCategory(UserCategory userCategory){
 		UserCategoryResponse res = userCategoryService.createUserCategoryR(userCategory);
+		logInfo.info("new userCategory is created");
 		return ResponseEntity.status(HttpStatus.CREATED).body(res);
 	}
 	
@@ -47,6 +52,7 @@ public class UserCategoryController {
 	public ResponseEntity<Void> deleteAllUserCategory(){
 		boolean deleted=userCategoryService.deleteAllUserCategoryR();		
 		if (deleted) {
+			logInfo.info("all userCategory are deleted");
 	        return ResponseEntity.status(HttpStatus.GONE).build(); 
 	    } else {
 	        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

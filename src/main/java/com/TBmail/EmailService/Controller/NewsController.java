@@ -1,5 +1,7 @@
 package com.TBmail.EmailService.Controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,12 +22,14 @@ public class NewsController {
 	@Autowired
 	NewsService newsService;
 	
+	private static final Logger logInfo=LoggerFactory.getLogger(NewsController.class);
 	
 	@Operation(summary="create/update News",
 			description="create/update by spesifying News object. Response will be NewsResponse object")
 	@PostMapping("/News/add")
 	public ResponseEntity<NewsResponse> addNews(News news){
 		NewsResponse nR=newsService.addNewsR(news);
+		logInfo.info("new news added to db");
 		return ResponseEntity.status(HttpStatus.CREATED).body(nR);
 	}
 	
@@ -36,6 +40,7 @@ public class NewsController {
 	public ResponseEntity<Void> deleteAllNews(){
 		boolean deleted=newsService.deleteAllNewsR();
 		if (deleted) {
+			logInfo.info("All news are deleted from DB");
 	        return ResponseEntity.status(HttpStatus.GONE).build(); 
 	    } else {
 	        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
