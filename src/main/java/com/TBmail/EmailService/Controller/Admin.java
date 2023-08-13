@@ -60,10 +60,10 @@ public class Admin {
 	
 	@PostMapping("/add")
 	public ResponseEntity<Void> addPeople(@RequestParam String name,
-										  @RequestParam String emailAddress,
-										  @RequestParam String CategoryName,
-										  @RequestParam String CategoryUrl,
-										  @RequestParam(value = "LastNewsUrl", required = false) String LastNewsUrl) throws Exception{
+		@RequestParam String emailAddress,
+	        @RequestParam String CategoryName,
+		@RequestParam String CategoryUrl,
+		@RequestParam(value = "LastNewsUrl", required = false) String LastNewsUrl) throws Exception{
 		
 		User user = new User();
 		user.setName(name);
